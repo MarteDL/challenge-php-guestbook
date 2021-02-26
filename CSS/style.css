@@ -1,4 +1,72 @@
+body {
+    background: #ebe3d1;
+    color: #3f4e4b;
+}
+
+main {
+    background-image: url("../img/pattern.jpg");
+    background-repeat: repeat;
+}
+
+main a {
+    background: #ebe3d1 ;
+}
+
+.card {
+    background: #ebe3d1
+}
+
 .jumbotron {
     background-image: url("../img/jumbotron.jpg");
     background-size: 100%;
+}
+
+.page-link {
+    background-color: #ebe3d1!important;
+    border: 1px solid #f4a000;
+}
+
+.page-link:hover {
+    border: 1px solid #ebe3d1;
+    color: #b48437 !important;
+}
+
+#gotopbtn {
+    background-color: #ebe3d1!important;
+    border: 1px solid #f4a000;
+}
+
+#gotopbtn:hover {
+    color: #b48437 !important;
+    border: 1px solid #ebe3d1;
+}
+
+/*footer*/
+
+footer {
+    background-image: url("../img/pattern.jpg");
+    background-repeat: repeat;
+}
+
+.form-control {
+    font-size: 15px;
+    background: #ebe3d1;
+}
+
+footer a {
+    color: #ebe3d1
+}
+
+label {
+    display: none;
+}
+
+#icon {
+    display: flex;
+    min-width: 0.5rem;
+}
+
+#icon img {
+    height: 40px;
+    margin: 0 7px;
 }

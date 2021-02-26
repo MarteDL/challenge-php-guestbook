@@ -1,18 +1,50 @@
 <?php
 
 
-class Post
-{
-    private string $title;
-    private string $date;
-    private string $content;
-    private string $author;
+use JetBrains\PhpStorm\Pure;
 
-    public function __construct($title, $content, $author){
-        $this->title = $title;
-        $this->content = $content;
+class Post implements JsonSerializable
+{
+    protected string $author;
+    protected string $title;
+    protected string $message;
+    protected string $date;
+
+    #[Pure] public function __construct($author, $title, $message, $date)
+    {
         $this->author = $author;
-        $this->date = date("F j, Y");
+        $this->title = $title;
+        $this->message = $message;
+        $this->date = $date;
     }
 
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function getDate(): bool|string
+    {
+        return $this->date;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'author' => $this->author,
+            'title' => $this->title,
+            'message' => $this->message,
+            'date' => $this->date
+        ];
+    }
 }
