@@ -12,11 +12,21 @@ require 'classes/postCollection.php';
 
 $myMessages = new postCollection();
 
-if (isset($_POST['submit'])){
-    $post = new Post(htmlspecialchars($_POST['name']), htmlspecialchars($_POST['title']), htmlspecialchars($_POST['message']), date("j F Y, G:i"));
-    $myMessages->writeAwayPost($post);
+function redirect()
+{
+    unset($_POST['submit']);
     header("location: index.php");
-    exit;
+}
+
+if (isset($_POST['submit'])) {
+    setcookie("popUpMessage", "", time() - 3600);
+    $post = new Post(htmlspecialchars($_POST['name']), htmlspecialchars($_POST['title']), htmlspecialchars($_POST['message']), date("m.d.y, G:i"));
+    if ($post->containsBadWords()) {
+        setcookie('popUpMessage', 'Do you kiss your mama with that mouth?! Go wash your mouth with soap, you filthy hobbit(ses)');
+    } else {
+        $myMessages->writeAwayPost($post);
+    }
+    redirect();
 }
 
 ?>
@@ -36,9 +46,9 @@ if (isset($_POST['submit'])){
 </head>
 <body class="d-flex flex-column min-vh-100">
 <?php
-require 'html/header.php';
-require 'html/main.php';
-require 'html/footer.php';
+require_once 'html/header.php';
+require_once 'html/main.php';
+require_once 'html/footer.php';
 ?>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

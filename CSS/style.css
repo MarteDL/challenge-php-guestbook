@@ -8,6 +8,11 @@ main {
     background-repeat: repeat;
 }
 
+.inputField {
+    font-size: 15px;
+    background: #ebe3d1;
+}
+
 main a {
     background: #ebe3d1 ;
 }
@@ -57,7 +62,7 @@ footer a {
     color: #ebe3d1
 }
 
-label {
+footer label {
     display: none;
 }
 

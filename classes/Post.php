@@ -5,10 +5,12 @@ use JetBrains\PhpStorm\Pure;
 
 class Post implements JsonSerializable
 {
-    protected string $author;
-    protected string $title;
-    protected string $message;
-    protected string $date;
+    private string $author;
+    private string $title;
+    private string $message;
+    private string $date;
+    private array $badWords;
+
 
     #[Pure] public function __construct($author, $title, $message, $date)
     {
@@ -16,6 +18,10 @@ class Post implements JsonSerializable
         $this->title = $title;
         $this->message = $message;
         $this->date = $date;
+
+        $jsonBadWords = file_get_contents('text-files/badwords.txt');
+        $decodedBadWords = json_decode($jsonBadWords);
+        $this->badWords = $decodedBadWords;
     }
 
     public function getAuthor(): string
@@ -36,6 +42,22 @@ class Post implements JsonSerializable
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    #[Pure] public function containsBadWords(): bool
+    {
+        foreach ($this->badWords as $badWord) {
+            if (str_contains($this->title, $badWord)) {
+                return true;
+            }
+            if (str_contains($this->author, $badWord)) {
+                return true;
+            }
+            if (str_contains($this->message, $badWord)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function jsonSerialize()

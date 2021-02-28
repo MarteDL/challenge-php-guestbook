@@ -1,6 +1,7 @@
 <?php
 
 
+
 ?>
 
 <footer class="blog-footer container mt-5">
@@ -37,19 +38,20 @@
     <div class="footer pt-5">
 
         <!-- copyright -->
-        <p class="text-center">Copyright @2021 | Designed by <a href="https://oscarpete.github.io/travelsmiles/">MarteDL</a>
+        <p class="text-center">Copyright @2021 | Designed by <a
+                    href="https://github.com/MarteDL">MarteDL</a>
         </p>
 
         <!-- social media links -->
         <div id="icon" class="d-flex justify-content-center pb-4">
-            <a href="https://github.com/oscarpete/travelsmiles" target="_blank"><img src="img/github.svg"
+            <a href="https://github.com/MarteDL" target="_blank"><img src="img/github.svg"
                                                                                      alt="Github icon"/></a>
-            <a href="https://www.facebook.com/TheJordanCountry/" target="_blank"><img src="img/facebook.svg"
+            <a href="https://www.facebook.com/marte.deleeuw/" target="_blank"><img src="img/facebook.svg"
                                                                                       alt="Facebook icon"/></a>
-            <a href="https://www.linkedin.com/feed/" target="_blank"><img src="img/linkedin.svg"
+            <a href="https://www.linkedin.com/in/marte-de-leeuw-bb4337102/" target="_blank"><img src="img/linkedin.svg"
                                                                           alt="Linkedin icon"/></a>
             <a href="https://www.instagram.com" target="_blank"><img src="img/instagram.svg"
-                                                                                  alt="Instagram icon"/></a>
+                                                                     alt="Instagram icon"/></a>
         </div>
     </div>
 </footer>
