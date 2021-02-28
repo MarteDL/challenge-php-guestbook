@@ -18,10 +18,11 @@ You can either use json_encode() or serialize() to convert your array to a strin
 ## Must-have features
 * Posts must have the following attributes:
 
-*   Title
-*   Date
-*   Content
-*   Author name
+  * Title
+  * Date
+  * Content
+  * Author name
+
 * Use at least 2 classes: PostLoader & Post
 
 * The messages are sorted from new (top) to old (bottom).
