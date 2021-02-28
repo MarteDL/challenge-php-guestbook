@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 <main class="container py-3 rounded">
     <form method="post" action="">
-        <div class="form-group d-flex justify-content-end">
+        <div class="form-group mx-4 d-flex justify-content-end">
             <label class="mr-2 my-auto" for="numberOfPosts">Messages per page: </label><input class="rounded inputField"
                                                                                               type="number"
                                                                                               id="numberOfPosts"
                                                                                               name="numberOfPosts"
                                                                                               value="<?php echo $_POST['numberOfPosts'] ?? 20 ?>"
-                                                                                              min="4"
+                                                                                              min="3"
                                                                                               max="<?php echo count($myMessages->getPosts()) ?>">
         </div>
     </form>
