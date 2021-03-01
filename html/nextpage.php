@@ -1,17 +1,6 @@
 <?php
 
-declare(strict_types=1);
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-set_error_handler("var_dump");
-
-$numberOfPosts = 20;
-
-if (isset($_POST['numberOfPosts'])){
-    $numberOfPosts = $_POST['numberOfPosts'];
-}
 
 ?>
 
@@ -43,8 +32,8 @@ if (isset($_POST['numberOfPosts'])){
     endif;
     ?>
     <!--    posts part-->
-    <?php for ($i = 0; $i < $numberOfPosts; $i++) {
-        if ($i % 3 === 0 && ($i === $numberOfPosts - 1)): ?>
+    <?php for ($i = 0; $i < $_POST['numberOfPosts']; $i++) {
+        if ($i % 3 === 0 && ($i === $_POST['numberOfPosts'] - 1)): ?>
         <div class="card-deck mx-2">
             <div class="card p-3 m-3">
                 <div class="card-body">
@@ -67,7 +56,7 @@ if (isset($_POST['numberOfPosts'])){
                     </p>
                 </div>
             </div>
-        <?php elseif ($i % 3 === 2 || ($i === $numberOfPosts - 1)): ?>
+        <?php elseif ($i % 3 === 2 || ($i === $_POST['numberOfPosts'] - 1)): ?>
             <div class="card p-3 m-3">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $myMessages->getPosts()[$i]->getTitle() ?></h5>

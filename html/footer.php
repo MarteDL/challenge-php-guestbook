@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+set_error_handler("var_dump");
 
 
 ?>
@@ -28,7 +34,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-warning" name="submit">Send</button>
+                    <button type="submit" class="btn" name="submit">Send</button>
                 </div>
             </form>
         </div>

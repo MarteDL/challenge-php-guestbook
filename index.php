@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-//ini_set('display_errors', '1');
-//ini_set('display_startup_errors', '1');
-//error_reporting(E_ALL);
-//set_error_handler("var_dump");
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+set_error_handler("var_dump");
 
 require 'classes/Post.php';
 require 'classes/postCollection.php';
@@ -15,12 +15,12 @@ $myMessages = new postCollection();
 function redirect()
 {
     unset($_POST['submit']);
-    header("location: index.php");
+    header($_SERVER['PHP_SELF']);
 }
 
 if (isset($_POST['submit'])) {
     setcookie("popUpMessage", "", time() - 3600);
-    $post = new Post(htmlspecialchars($_POST['name']), htmlspecialchars($_POST['title']), htmlspecialchars($_POST['message']), date("m.d.y, G:i"));
+    $post = new Post(htmlspecialchars($_POST['name']), htmlspecialchars($_POST['title']), htmlspecialchars($_POST['message']), date("j F Y, G:i"));
     if ($post->containsBadWords()) {
         setcookie('popUpMessage', 'Do you kiss your mama with that mouth?! Go wash your mouth with soap, you filthy hobbit(ses)');
     } else {

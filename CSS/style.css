@@ -13,6 +13,19 @@ main {
     background: #ebe3d1;
 }
 
+.btn {
+    color: #3f4e4b;
+    background-color: #d33a32;
+    border-color: #c4372e;
+}
+
+.btn:hover {
+    background-color: #d33a32;
+    opacity: 0.7;
+    border: solid 1px #721a19;
+}
+
+
 main a {
     background: #ebe3d1 ;
 }

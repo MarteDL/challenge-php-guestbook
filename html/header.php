@@ -1,5 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+set_error_handler("var_dump");
+
 ?>
 
 <header>
@@ -10,7 +17,7 @@
                 <p class="lead">On this page you can leave a message for me. Kind words, compliments and jokes will gain
                     you karma-points.</p>
                 <hr class="my-4">
-                <a class="btn btn-warning btn-lg" href="#postForm" role="button">Write a message</a>
+                <a class="btn btn-lg" href="#postForm" role="button">Write a message</a>
             </div>
         </div>
     </div>
