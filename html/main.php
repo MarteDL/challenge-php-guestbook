@@ -13,6 +13,11 @@ if (isset($_POST['numberOfPosts'])){
     $numberOfPosts = $_POST['numberOfPosts'];
 }
 
+//TODO: enter some if/else statement to see on which page we are and which posts to display:
+// $_GET['page'] and then start display posts from certain index on
+// for example: page 3 should start on $i = $numberOfPosts*3
+// make sure $numberOfPosts doesn't change when switching between pages
+
 ?>
 
 <main class="container py-3 rounded">
@@ -99,9 +104,9 @@ if (isset($_POST['numberOfPosts'])){
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="text-warning page-link" href="#">1</a></li>
-                <li class="page-item"><a class="text-warning page-link" href="#">2</a></li>
-                <li class="page-item"><a class="text-warning page-link" href="#">3</a></li>
+                <li class="page-item"><a class="text-warning page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="text-warning page-link" href="?page=2">2</a></li>
+                <li class="page-item"><a class="text-warning page-link" href="?page=3">3</a></li>
                 <li class="page-item">
                     <a class="text-warning page-link" href="#" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

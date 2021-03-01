@@ -14,8 +14,9 @@ $myMessages = new postCollection();
 
 function redirect()
 {
-    unset($_POST['submit']);
-    header($_SERVER['PHP_SELF']);
+    unset($_POST, $_REQUEST, $post);
+    header("location: ".$_SERVER['PHP_SELF']);
+    exit;
 }
 
 if (isset($_POST['submit'])) {
