@@ -7,16 +7,30 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 set_error_handler("var_dump");
 
-$numberOfPosts = 20;
 
-if (isset($_POST['numberOfPosts'])){
-    $numberOfPosts = $_POST['numberOfPosts'];
+if (!isset ($_COOKIE['numberOfPostsPerPage'])){
+    setcookie('numberOfPostsPerPage', '12');
 }
 
-//TODO: enter some if/else statement to see on which page we are and which posts to display:
-// $_GET['page'] and then start display posts from certain index on
-// for example: page 3 should start on $i = $numberOfPosts*3
-// make sure $numberOfPosts doesn't change when switching between pages
+if (isset($_GET['page'])) {
+    $currentPage = $_GET['page'];
+}
+else {
+    $currentPage = 1;
+}
+
+if (isset($_POST['numberOfPostsPerPage'])){
+    setcookie('numberOfPostsPerPage', $_POST['numberOfPostsPerPage']);
+    $numberOfPosts = $_POST['numberOfPostsPerPage'];
+}
+else if (!isset($_POST['numberOfPostsPerPage']) && isset($_COOKIE['numberOfPostsPerPage'])) {
+    $numberOfPosts = $_COOKIE['numberOfPostsPerPage'];
+}
+else {
+    $numberOfPosts = 12;
+}
+
+$numberOfPages = ceil(count($myMessages->getPosts()) / $numberOfPosts);
 
 ?>
 
@@ -25,9 +39,9 @@ if (isset($_POST['numberOfPosts'])){
         <div class="form-group mx-4 d-flex justify-content-end">
             <label class="mr-2 my-auto" for="numberOfPosts">Messages per page: </label><input class="rounded inputField"
                                                                                               type="number"
-                                                                                              id="numberOfPosts"
-                                                                                              name="numberOfPosts"
-                                                                                              value="<?php echo $_POST['numberOfPosts'] ?? 20 ?>"
+                                                                                              id="numberOfPostsPerPage"
+                                                                                              name="numberOfPostsPerPage"
+                                                                                              value="<?php echo $_POST['numberOfPostsPerPage'] ?? $_COOKIE['numberOfPostsPerPage'] ?>"
                                                                                               min="3"
                                                                                               max="<?php echo count($myMessages->getPosts()) ?>">
         </div>
@@ -99,19 +113,23 @@ if (isset($_POST['numberOfPosts'])){
     <div class="row mt-5 d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
+                <?php if (isset($_GET['page']) && $_GET['page'] > 1) : ?>
                 <li class="page-item">
-                    <a class="text-warning page-link" href="#" aria-label="Previous">
+                    <a class="text-warning page-link" href="?page=<?php echo ($currentPage-1); ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="text-warning page-link" href="?page=1">1</a></li>
-                <li class="page-item"><a class="text-warning page-link" href="?page=2">2</a></li>
-                <li class="page-item"><a class="text-warning page-link" href="?page=3">3</a></li>
+                <?php endif;
+                for ($i=1; $i<$numberOfPages+1; $i++):?>
+                <li class="page-item"><a class="text-warning page-link" href="?page=<?php echo $i; ?>"><?php echo $i ?></a></li>
+                <?php endfor;
+                if (!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page'] < (int)$numberOfPages)): ?>
                 <li class="page-item">
-                    <a class="text-warning page-link" href="#" aria-label="Next">
+                    <a class="text-warning page-link" href="?page=<?php echo ($currentPage+1); ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
+                <?php endif ?>
             </ul>
         </nav>
     </div>
