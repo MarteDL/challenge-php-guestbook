@@ -72,7 +72,11 @@ footer {
 }
 
 footer a {
-    color: #ebe3d1
+    color: #d33a32;
+}
+
+footer a:hover {
+    color: #82201a;
 }
 
 footer label {

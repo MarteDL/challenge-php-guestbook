@@ -44,7 +44,7 @@ set_error_handler("var_dump");
     <div class="footer pt-5">
 
         <!-- copyright -->
-        <p class="text-center">Copyright @2021 | Designed by <a
+        <p class="text-center">Copyright &copy; <?php echo date ('Y'); ?> | Designed by <a
                     href="https://github.com/MarteDL">MarteDL</a>
         </p>
 

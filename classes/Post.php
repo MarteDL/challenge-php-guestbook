@@ -52,15 +52,14 @@ class Post implements JsonSerializable
 
     #[Pure] public function containsBadWords(): bool
     {
-        // TODO: make sure capitals don't stop the filter from working
         foreach ($this->badWords as $badWord) {
-            if (str_contains($this->title, $badWord)) {
+            if (str_contains(strtolower($this->title), $badWord)) {
                 return true;
             }
-            if (str_contains($this->author, $badWord)) {
+            if (str_contains(strtolower($this->author), $badWord)) {
                 return true;
             }
-            if (str_contains($this->message, $badWord)) {
+            if (str_contains(strtolower($this->message), $badWord)) {
                 return true;
             }
         }
