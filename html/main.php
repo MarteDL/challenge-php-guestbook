@@ -8,29 +8,32 @@ error_reporting(E_ALL);
 set_error_handler("var_dump");
 
 
-if (!isset ($_COOKIE['numberOfPostsPerPage'])){
+// code to determine how many posts needs to be displayed per page
+if (!isset ($_COOKIE['numberOfPostsPerPage'])) {
     setcookie('numberOfPostsPerPage', '12');
 }
 
-if (isset($_GET['page'])) {
-    $currentPage = $_GET['page'];
-}
-else {
-    $currentPage = 1;
-}
-
-if (isset($_POST['numberOfPostsPerPage'])){
+if (isset($_POST['numberOfPostsPerPage'])) {
     setcookie('numberOfPostsPerPage', $_POST['numberOfPostsPerPage']);
     $numberOfPosts = $_POST['numberOfPostsPerPage'];
-}
-else if (!isset($_POST['numberOfPostsPerPage']) && isset($_COOKIE['numberOfPostsPerPage'])) {
+} else if (!isset($_POST['numberOfPostsPerPage']) && isset($_COOKIE['numberOfPostsPerPage'])) {
     $numberOfPosts = $_COOKIE['numberOfPostsPerPage'];
-}
-else {
+} else {
     $numberOfPosts = 12;
 }
 
+// part about the number of pages and on which page we are
 $numberOfPages = ceil(count($myMessages->getPosts()) / $numberOfPosts);
+
+if (isset($_GET['page']) && $_GET['page'] <= $numberOfPages) {
+    $currentPage = $_GET['page'];
+} else {
+    $_GET['page'] = 1;
+    $currentPage = 1;
+}
+
+// determine on what index we need to start (depends on which page we are on) with our forloop
+$firstPost = ($currentPage - 1) * $numberOfPosts;
 
 ?>
 
@@ -62,37 +65,40 @@ $numberOfPages = ceil(count($myMessages->getPosts()) / $numberOfPosts);
     endif;
     ?>
     <!--    posts part-->
-    <?php for ($i = 0; $i < $numberOfPosts; $i++) {
-        if ($i % 3 === 0 && ($i === $numberOfPosts - 1)): ?>
-        <div class="card-deck mx-2">
-            <div class="card p-3 m-3">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $myMessages->getPosts()[$i]->getTitle() ?></h5>
-                    <p class="card-text"><?php echo $myMessages->getPosts()[$i]->getMessage() ?></p>
-                    <p class="card-text text-muted mb-0"><?php echo $myMessages->getPosts()[$i]->getAuthor() ?>,</p>
-                    <p class="card-text"><small class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
-                    </p>
+    <?php for ($i = $firstPost, $j = 0; $i < count($myMessages->getPosts()) && $j < $numberOfPosts; $i++, $j++) {
+        if (($j % 3 === 0 && ($j === $numberOfPosts - 1)) || ($j % 3 === 0 && $i === count($myMessages->getPosts()) - 1)): ?>
+            <div class="card-deck mx-2">
+                <div class="card p-3 m-3">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $myMessages->getPosts()[$i]->getTitle() ?></h5>
+                        <p class="card-text"><?php echo $myMessages->getPosts()[$i]->getMessage() ?></p>
+                        <p class="card-text text-muted mb-0"><?php echo $myMessages->getPosts()[$i]->getAuthor() ?>,</p>
+                        <p class="card-text"><small
+                                    class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <?php elseif ($i === 0 || $i % 3 === 0) : ?>
+        <?php elseif ($i === $firstPost || $j % 3 === 0) : ?>
             <div class="card-deck mx-2">
             <div class="card p-3 m-3">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $myMessages->getPosts()[$i]->getTitle() ?></h5>
                     <p class="card-text"><?php echo $myMessages->getPosts()[$i]->getMessage() ?></p>
                     <p class="card-text text-muted mb-0"><?php echo $myMessages->getPosts()[$i]->getAuthor() ?>,</p>
-                    <p class="card-text"><small class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
+                    <p class="card-text"><small
+                                class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
                     </p>
                 </div>
             </div>
-        <?php elseif ($i % 3 === 2 || ($i === $numberOfPosts - 1)): ?>
+        <?php elseif ($j % 3 === 2 || $j === $numberOfPosts - 1 || $i === count($myMessages->getPosts()) - 1): ?>
             <div class="card p-3 m-3">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $myMessages->getPosts()[$i]->getTitle() ?></h5>
                     <p class="card-text"><?php echo $myMessages->getPosts()[$i]->getMessage() ?></p>
                     <p class="card-text text-muted mb-0"><?php echo $myMessages->getPosts()[$i]->getAuthor() ?>,</p>
-                    <p class="card-text"><small class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
+                    <p class="card-text"><small
+                                class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
                     </p>
                 </div>
             </div>
@@ -103,32 +109,37 @@ $numberOfPages = ceil(count($myMessages->getPosts()) / $numberOfPosts);
                     <h5 class="card-title"><?php echo $myMessages->getPosts()[$i]->getTitle() ?></h5>
                     <p class="card-text"><?php echo $myMessages->getPosts()[$i]->getMessage() ?></p>
                     <p class="card-text text-muted mb-0"><?php echo $myMessages->getPosts()[$i]->getAuthor() ?>,</p>
-                    <p class="card-text"><small class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
+                    <p class="card-text"><small
+                                class="text-muted"><?php echo $myMessages->getPosts()[$i]->getDate() ?></small>
                     </p>
                 </div>
             </div>
-        <?php endif; } ?>
+        <?php endif;
+    } ?>
 
     <!--    navbar bottom of the page to go to next or prev posts page-->
     <div class="row mt-5 d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <?php if (isset($_GET['page']) && $_GET['page'] > 1) : ?>
-                <li class="page-item">
-                    <a class="text-warning page-link" href="?page=<?php echo ($currentPage-1); ?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+                    <li class="page-item">
+                        <a class="text-warning page-link marginTop" href="?page=<?php echo($currentPage - 1); ?>"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
                 <?php endif;
-                for ($i=1; $i<$numberOfPages+1; $i++):?>
-                <li class="page-item"><a class="text-warning page-link" href="?page=<?php echo $i; ?>"><?php echo $i ?></a></li>
+                for ($i = 1; $i < $numberOfPages + 1; $i++):?>
+                    <li class="page-item <?php echo $i === (int)$currentPage ? "currentPage" : "marginTop"?>"><a class="text-warning page-link"
+                                             href="?page=<?php echo $i; ?>"><?php echo $i ?></a></li>
                 <?php endfor;
                 if (!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page'] < (int)$numberOfPages)): ?>
-                <li class="page-item">
-                    <a class="text-warning page-link" href="?page=<?php echo ($currentPage+1); ?>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                    <li class="page-item">
+                        <a class="text-warning page-link marginTop" href="?page=<?php echo($currentPage + 1); ?>"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
                 <?php endif ?>
             </ul>
         </nav>
